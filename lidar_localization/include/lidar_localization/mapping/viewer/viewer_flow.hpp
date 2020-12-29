@@ -19,10 +19,12 @@
 // viewer
 #include "lidar_localization/mapping/viewer/viewer.hpp"
 
-namespace lidar_localization {
-class ViewerFlow {
+namespace lidar_localization
+{
+  class ViewerFlow
+  {
   public:
-    ViewerFlow(ros::NodeHandle& nh, std::string cloud_topic);
+    ViewerFlow(ros::NodeHandle &nh, std::string cloud_topic);
 
     bool Run();
     bool SaveMap();
@@ -56,7 +58,7 @@ class ViewerFlow {
 
     CloudData current_cloud_data_;
     PoseData current_transformed_odom_;
-};
-}
+  };
+} // namespace lidar_localization
 
 #endif
