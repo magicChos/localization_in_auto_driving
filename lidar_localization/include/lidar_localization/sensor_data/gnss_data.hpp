@@ -11,11 +11,13 @@
 
 #include "Geocentric/LocalCartesian.hpp"
 
-using std::vector;
 using std::string;
+using std::vector;
 
-namespace lidar_localization {
-class GNSSData {
+namespace lidar_localization
+{
+  class GNSSData
+  {
   public:
     double time = 0.0;
     double longitude = 0.0;
@@ -31,9 +33,9 @@ class GNSSData {
     static GeographicLib::LocalCartesian geo_converter;
     static bool origin_position_inited;
 
-  public: 
+  public:
     void InitOriginPosition();
     void UpdateXYZ();
-};
+  };
 }
 #endif

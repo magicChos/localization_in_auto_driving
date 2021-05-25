@@ -18,7 +18,8 @@
 
 using namespace lidar_localization;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     google::InitGoogleLogging(argv[0]);
     FLAGS_log_dir = WORK_SPACE_PATH + "/Log";
     FLAGS_alsologtostderr = 1;
@@ -49,63 +50,79 @@ int main(int argc, char *argv[]) {
     CloudData::CLOUD_PTR local_map_ptr(new CloudData::CLOUD());
     CloudData::CLOUD_PTR global_map_ptr(new CloudData::CLOUD());
     CloudData::CLOUD_PTR current_scan_ptr(new CloudData::CLOUD());
-    
+
     double run_time = 0.0;
     double init_time = 0.0;
     bool time_inited = false;
     bool has_global_map_published = false;
 
     ros::Rate rate(100);
-    while (ros::ok()) {
+    while (ros::ok())
+    {
         ros::spinOnce();
 
         cloud_sub_ptr->ParseData(cloud_data_buff);
         imu_sub_ptr->ParseData(imu_data_buff);
         gnss_sub_ptr->ParseData(gnss_data_buff);
 
-        if (!transform_received) {
-            if (lidar_to_imu_ptr->LookupData(lidar_to_imu)) {
+        if (!transform_received)
+        {
+            if (lidar_to_imu_ptr->LookupData(lidar_to_imu))
+            {
                 transform_received = true;
             }
-        } else {
-            while (cloud_data_buff.size() > 0 && imu_data_buff.size() > 0 && gnss_data_buff.size() > 0) {
+        }
+        else
+        {
+            while (cloud_data_buff.size() > 0 && imu_data_buff.size() > 0 && gnss_data_buff.size() > 0)
+            {
                 CloudData cloud_data = cloud_data_buff.front();
                 IMUData imu_data = imu_data_buff.front();
                 GNSSData gnss_data = gnss_data_buff.front();
 
-                if (!time_inited) {
+                if (!time_inited)
+                {
                     time_inited = true;
                     init_time = cloud_data.time;
-                } else {
+                }
+                else
+                {
                     run_time = cloud_data.time - init_time;
                 }
 
                 double d_time = cloud_data.time - imu_data.time;
-                if (d_time < -0.05) {
+                if (d_time < -0.05)
+                {
                     cloud_data_buff.pop_front();
-                } else if (d_time > 0.05) {
+                }
+                else if (d_time > 0.05)
+                {
                     imu_data_buff.pop_front();
                     gnss_data_buff.pop_front();
-                } else {
+                }
+                else
+                {
                     cloud_data_buff.pop_front();
                     imu_data_buff.pop_front();
                     gnss_data_buff.pop_front();
 
                     Eigen::Matrix4f odometry_matrix = Eigen::Matrix4f::Identity();
 
-                    if (!gnss_origin_position_inited) {
+                    if (!gnss_origin_position_inited)
+                    {
                         gnss_data.InitOriginPosition();
                         gnss_origin_position_inited = true;
                     }
                     gnss_data.UpdateXYZ();
-                    odometry_matrix(0,3) = gnss_data.local_E;
-                    odometry_matrix(1,3) = gnss_data.local_N;
-                    odometry_matrix(2,3) = gnss_data.local_U;
-                    odometry_matrix.block<3,3>(0,0) = imu_data.GetOrientationMatrix();
+                    odometry_matrix(0, 3) = gnss_data.local_E;
+                    odometry_matrix(1, 3) = gnss_data.local_N;
+                    odometry_matrix(2, 3) = gnss_data.local_U;
+                    odometry_matrix.block<3, 3>(0, 0) = imu_data.GetOrientationMatrix();
                     odometry_matrix *= lidar_to_imu;
                     gnss_pub_ptr->Publish(odometry_matrix);
 
-                    if (!front_end_pose_inited) {
+                    if (!front_end_pose_inited)
+                    {
                         front_end_pose_inited = true;
                         front_end_ptr->SetInitPose(odometry_matrix);
                     }
@@ -118,8 +135,10 @@ int main(int argc, char *argv[]) {
                     if (front_end_ptr->GetNewLocalMap(local_map_ptr))
                         local_map_pub_ptr->Publish(local_map_ptr);
                 }
-                if (run_time > 460.0 && !has_global_map_published) {
-                    if (front_end_ptr->GetNewGlobalMap(global_map_ptr)) {
+                if (run_time > 460.0 && !has_global_map_published)
+                {
+                    if (front_end_ptr->GetNewGlobalMap(global_map_ptr))
+                    {
                         global_map_pub_ptr->Publish(global_map_ptr);
                         has_global_map_published = true;
                     }
