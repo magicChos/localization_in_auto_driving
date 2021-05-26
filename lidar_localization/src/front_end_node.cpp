@@ -43,6 +43,8 @@ int main(int argc, char *argv[])
     std::deque<CloudData> cloud_data_buff;
     std::deque<IMUData> imu_data_buff;
     std::deque<GNSSData> gnss_data_buff;
+
+    // lidar和Imu之间的位姿关系
     Eigen::Matrix4f lidar_to_imu = Eigen::Matrix4f::Identity();
     bool transform_received = false;
     bool gnss_origin_position_inited = false;
@@ -106,6 +108,7 @@ int main(int argc, char *argv[])
                     imu_data_buff.pop_front();
                     gnss_data_buff.pop_front();
 
+                    // 里程计位姿
                     Eigen::Matrix4f odometry_matrix = Eigen::Matrix4f::Identity();
 
                     if (!gnss_origin_position_inited)
@@ -124,8 +127,11 @@ int main(int argc, char *argv[])
                     if (!front_end_pose_inited)
                     {
                         front_end_pose_inited = true;
+
+                        // step 1: 设置里程计初始位姿
                         front_end_ptr->SetInitPose(odometry_matrix);
                     }
+                    
                     front_end_ptr->SetPredictPose(odometry_matrix);
                     Eigen::Matrix4f laser_matrix = front_end_ptr->Update(cloud_data);
                     laser_odom_pub_ptr->Publish(laser_matrix);

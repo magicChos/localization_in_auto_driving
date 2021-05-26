@@ -8,22 +8,27 @@
 
 #include <Eigen/Dense>
 
-namespace lidar_localization {
-class IMUData {
+namespace lidar_localization
+{
+  class IMUData
+  {
   public:
-    struct LinearAcceleration {
+    struct LinearAcceleration
+    {
       double x = 0.0;
       double y = 0.0;
       double z = 0.0;
     };
 
-    struct AngularVelocity {
+    struct AngularVelocity
+    {
       double x = 0.0;
       double y = 0.0;
       double z = 0.0;
     };
-    
-    struct Orientation {
+
+    struct Orientation
+    {
       double x = 0.0;
       double y = 0.0;
       double z = 0.0;
@@ -34,15 +39,16 @@ class IMUData {
     LinearAcceleration linear_acceleration;
     AngularVelocity angular_velocity;
     Orientation orientation;
-  
+
   public:
     // 把四元数转换成旋转矩阵送出去
-    Eigen::Matrix3f GetOrientationMatrix() {
+    Eigen::Matrix3f GetOrientationMatrix()
+    {
       Eigen::Quaterniond q(orientation.w, orientation.x, orientation.y, orientation.z);
       Eigen::Matrix3f matrix = q.matrix().cast<float>();
 
       return matrix;
     }
-};
+  };
 }
 #endif
