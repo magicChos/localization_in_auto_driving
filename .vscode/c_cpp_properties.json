@@ -12,7 +12,8 @@
                 "/home/han/data/project/localization_in_auto_driving/lidar_localization/include",
                 "/usr/include/eigen3",
                 "/home/han/data/project/localization_in_auto_driving/lidar_localization/build/include",
-                "/usr/include/pcl-1.8"
+                "/usr/include/pcl-1.8",
+                "/home/han/data/project/localization_in_auto_driving/lidar_localization/build/include"
             ],
             "name": "Linux",
             "intelliSenseMode": "gcc-x64",
