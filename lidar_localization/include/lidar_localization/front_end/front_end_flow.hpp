@@ -18,10 +18,12 @@
 #include "lidar_localization/front_end/front_end.hpp"
 #include "lidar_localization/models/scan_adjust/distortion_adjust.hpp"
 
-namespace lidar_localization {
-class FrontEndFlow {
+namespace lidar_localization
+{
+  class FrontEndFlow
+  {
   public:
-    FrontEndFlow(ros::NodeHandle& nh);
+    FrontEndFlow(ros::NodeHandle &nh);
 
     bool Run();
     bool SaveMap();
@@ -68,7 +70,7 @@ class FrontEndFlow {
     Eigen::Matrix4f laser_odometry_ = Eigen::Matrix4f::Identity();
 
     std::shared_ptr<DistortionAdjust> distortion_adjust_ptr_;
-};
+  };
 }
 
 #endif
