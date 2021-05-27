@@ -21,6 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
    FILES
    saveMap.srv
+   # optimizeMap.srv
 )
 
 generate_messages(
@@ -29,12 +30,17 @@ generate_messages(
 )
 
 set(ALL_TARGET_LIBRARIES "")
+find_package(Gflags)
+find_package(Glog)
 
 include(cmake/glog.cmake)
 include(cmake/YAML.cmake)
 include(cmake/PCL.cmake)
 include(cmake/eigen.cmake)
 include(cmake/geographic.cmake)
+# include(cmake/g2o.cmake)
+
+include_directories(${GFLAGS_INCLUDE_DIRS} ${GLOG_INCLUDE_DIRS})
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 include(cmake/global_defination.cmake)
@@ -43,8 +49,11 @@ catkin_package()
 file(GLOB_RECURSE ALL_SRCS "*.cpp")
 file(GLOB_RECURSE NODE_SRCS "src/apps/*_node.cpp")
 file(GLOB_RECURSE THIRD_PARTY_SRCS "third_party/*.cpp")
+file(GLOB_RECURSE BUILD_SRCS "build/*.cpp")
 list(REMOVE_ITEM ALL_SRCS ${NODE_SRCS})
 list(REMOVE_ITEM ALL_SRCS ${THIRD_PARTY_SRCS})
+list(REMOVE_ITEM ALL_SRCS ${BUILD_SRCS})
+list(APPEND ALL_TARGET_LIBRARIES ${GLOG_LIBRARIES} ${GFLAGS_LIBRARIES})
 
 add_executable(test_frame_node src/apps/test_frame_node.cpp ${ALL_SRCS})
 target_link_libraries(test_frame_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES})

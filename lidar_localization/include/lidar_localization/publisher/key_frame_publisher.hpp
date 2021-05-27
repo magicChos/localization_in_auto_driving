@@ -12,16 +12,18 @@
 
 #include "lidar_localization/sensor_data/key_frame.hpp"
 
-namespace lidar_localization {
-class KeyFramePublisher {
+namespace lidar_localization
+{
+  class KeyFramePublisher
+  {
   public:
-    KeyFramePublisher(ros::NodeHandle& nh, 
-                      std::string topic_name, 
+    KeyFramePublisher(ros::NodeHandle &nh,
+                      std::string topic_name,
                       std::string frame_id,
                       int buff_size);
     KeyFramePublisher() = default;
 
-    void Publish(KeyFrame& key_frame);
+    void Publish(KeyFrame &key_frame);
 
     bool HasSubscribers();
 
@@ -29,6 +31,6 @@ class KeyFramePublisher {
     ros::NodeHandle nh_;
     ros::Publisher publisher_;
     std::string frame_id_ = "";
-};
+  };
 }
 #endif

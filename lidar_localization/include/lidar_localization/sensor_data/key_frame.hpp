@@ -8,8 +8,10 @@
 
 #include <Eigen/Dense>
 
-namespace lidar_localization {
-class KeyFrame {
+namespace lidar_localization
+{
+  class KeyFrame
+  {
   public:
     double time = 0.0;
     unsigned int index = 0;
@@ -17,7 +19,7 @@ class KeyFrame {
 
   public:
     Eigen::Quaternionf GetQuaternion();
-};
+  };
 }
 
 #endif

@@ -19,10 +19,12 @@
 // models
 #include "lidar_localization/models/scan_adjust/distortion_adjust.hpp"
 
-namespace lidar_localization {
-class DataPretreatFlow {
+namespace lidar_localization
+{
+  class DataPretreatFlow
+  {
   public:
-    DataPretreatFlow(ros::NodeHandle& nh);
+    DataPretreatFlow(ros::NodeHandle &nh);
 
     bool Run();
 
@@ -61,7 +63,7 @@ class DataPretreatFlow {
     GNSSData current_gnss_data_;
 
     Eigen::Matrix4f gnss_pose_ = Eigen::Matrix4f::Identity();
-};
+  };
 }
 
 #endif

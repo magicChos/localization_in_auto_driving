@@ -15,33 +15,36 @@
 #include "lidar_localization/models/registration/ndt_registration.hpp"
 #include "lidar_localization/models/cloud_filter/voxel_filter.hpp"
 
-namespace lidar_localization {
-class FrontEnd {
+namespace lidar_localization
+{
+  class FrontEnd
+  {
   public:
-    struct Frame { 
-        Eigen::Matrix4f pose = Eigen::Matrix4f::Identity();
-        CloudData cloud_data;
+    struct Frame
+    {
+      Eigen::Matrix4f pose = Eigen::Matrix4f::Identity();
+      CloudData cloud_data;
     };
 
   public:
     FrontEnd();
 
-    bool Update(const CloudData& cloud_data, Eigen::Matrix4f& cloud_pose);
-    bool SetInitPose(const Eigen::Matrix4f& init_pose);
+    bool Update(const CloudData &cloud_data, Eigen::Matrix4f &cloud_pose);
+    bool SetInitPose(const Eigen::Matrix4f &init_pose);
 
   private:
     bool InitWithConfig();
-    bool InitParam(const YAML::Node& config_node);
-    bool InitRegistration(std::shared_ptr<RegistrationInterface>& registration_ptr, const YAML::Node& config_node);
-    bool InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface>& filter_ptr, const YAML::Node& config_node);
-    bool UpdateWithNewFrame(const Frame& new_key_frame);
+    bool InitParam(const YAML::Node &config_node);
+    bool InitRegistration(std::shared_ptr<RegistrationInterface> &registration_ptr, const YAML::Node &config_node);
+    bool InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface> &filter_ptr, const YAML::Node &config_node);
+    bool UpdateWithNewFrame(const Frame &new_key_frame);
 
   private:
     std::string data_path_ = "";
 
     std::shared_ptr<CloudFilterInterface> frame_filter_ptr_;
     std::shared_ptr<CloudFilterInterface> local_map_filter_ptr_;
-    std::shared_ptr<RegistrationInterface> registration_ptr_; 
+    std::shared_ptr<RegistrationInterface> registration_ptr_;
 
     std::deque<Frame> local_map_frames_;
 
@@ -52,7 +55,7 @@ class FrontEnd {
 
     float key_frame_distance_ = 2.0;
     int local_frame_num_ = 20;
-};
+  };
 }
 
 #endif
