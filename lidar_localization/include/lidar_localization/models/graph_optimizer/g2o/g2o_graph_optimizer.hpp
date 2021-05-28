@@ -24,18 +24,19 @@
 
 #include "lidar_localization/models/graph_optimizer/interface_graph_optimizer.hpp"
 
-namespace g2o {
-class VertexSE3;
-class VertexPlane;
-class VertexPointXYZ;
-class EdgeSE3;
-class EdgeSE3Plane;
-class EdgeSE3PointXYZ;
-class EdgeSE3PriorXY;
-class EdgeSE3PriorXYZ;
-class EdgeSE3PriorVec;
-class EdgeSE3PriorQuat;
-class RobustKernelFactory;
+namespace g2o
+{
+  class VertexSE3;
+  class VertexPlane;
+  class VertexPointXYZ;
+  class EdgeSE3;
+  class EdgeSE3Plane;
+  class EdgeSE3PointXYZ;
+  class EdgeSE3PriorXY;
+  class EdgeSE3PriorXYZ;
+  class EdgeSE3PriorVec;
+  class EdgeSE3PriorQuat;
+  class RobustKernelFactory;
 } // namespace g2o
 
 G2O_USE_TYPE_GROUP(slam3d);
@@ -49,14 +50,16 @@ G2O_USE_OPTIMIZATION_LIBRARY(csparse)
 // G2O_REGISTER_TYPE(EDGE_SE3_PRIORQUAT, EdgeSE3PriorQuat)
 // } // namespace g2o
 
-namespace lidar_localization {
-class G2oGraphOptimizer: public InterfaceGraphOptimizer {
+namespace lidar_localization
+{
+  class G2oGraphOptimizer : public InterfaceGraphOptimizer
+  {
   public:
     G2oGraphOptimizer(const std::string &solver_type = "lm_var");
     // 优化
     bool Optimize() override;
     // 输出数据
-    bool GetOptimizedPose(std::deque<Eigen::Matrix4f>& optimized_pose) override;
+    bool GetOptimizedPose(std::deque<Eigen::Matrix4f> &optimized_pose) override;
     int GetNodeNum() override;
     // 添加节点、边、鲁棒核
     void SetEdgeRobustKernel(std::string robust_kernel_name, double robust_kernel_size) override;
@@ -85,6 +88,6 @@ class G2oGraphOptimizer: public InterfaceGraphOptimizer {
     std::string robust_kernel_name_;
     double robust_kernel_size_;
     bool need_robust_kernel_ = false;
-};
+  };
 } // namespace lidar_localization
 #endif
