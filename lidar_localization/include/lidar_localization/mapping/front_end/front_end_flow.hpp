@@ -12,10 +12,12 @@
 #include "lidar_localization/publisher/odometry_publisher.hpp"
 #include "lidar_localization/mapping/front_end/front_end.hpp"
 
-namespace lidar_localization {
-class FrontEndFlow {
+namespace lidar_localization
+{
+  class FrontEndFlow
+  {
   public:
-    FrontEndFlow(ros::NodeHandle& nh);
+    FrontEndFlow(ros::NodeHandle &nh);
 
     bool Run();
 
@@ -36,7 +38,7 @@ class FrontEndFlow {
     CloudData current_cloud_data_;
 
     Eigen::Matrix4f laser_odometry_ = Eigen::Matrix4f::Identity();
-};
+  };
 }
 
 #endif

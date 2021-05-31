@@ -15,10 +15,12 @@
 // loop closing
 #include "lidar_localization/mapping/loop_closing/loop_closing.hpp"
 
-namespace lidar_localization {
-class LoopClosingFlow {
+namespace lidar_localization
+{
+  class LoopClosingFlow
+  {
   public:
-    LoopClosingFlow(ros::NodeHandle& nh);
+    LoopClosingFlow(ros::NodeHandle &nh);
 
     bool Run();
 
@@ -42,7 +44,7 @@ class LoopClosingFlow {
 
     KeyFrame current_key_frame_;
     KeyFrame current_key_gnss_;
-};
+  };
 }
 
 #endif

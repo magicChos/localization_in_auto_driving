@@ -12,16 +12,18 @@
 
 #include "lidar_localization/sensor_data/loop_pose.hpp"
 
-namespace lidar_localization {
-class LoopPosePublisher {
+namespace lidar_localization
+{
+  class LoopPosePublisher
+  {
   public:
-    LoopPosePublisher(ros::NodeHandle& nh, 
-                      std::string topic_name, 
+    LoopPosePublisher(ros::NodeHandle &nh,
+                      std::string topic_name,
                       std::string frame_id,
                       int buff_size);
     LoopPosePublisher() = default;
 
-    void Publish(LoopPose& loop_pose);
+    void Publish(LoopPose &loop_pose);
 
     bool HasSubscribers();
 
@@ -29,6 +31,6 @@ class LoopPosePublisher {
     ros::NodeHandle nh_;
     ros::Publisher publisher_;
     std::string frame_id_ = "";
-};
+  };
 }
 #endif
