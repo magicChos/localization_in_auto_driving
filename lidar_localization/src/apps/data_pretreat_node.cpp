@@ -11,7 +11,8 @@
 
 using namespace lidar_localization;
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     google::InitGoogleLogging(argv[0]);
     FLAGS_log_dir = WORK_SPACE_PATH + "/Log";
     FLAGS_alsologtostderr = 1;
@@ -25,7 +26,8 @@ int main(int argc, char *argv[]) {
     std::shared_ptr<DataPretreatFlow> data_pretreat_flow_ptr = std::make_shared<DataPretreatFlow>(nh, cloud_topic);
 
     ros::Rate rate(100);
-    while (ros::ok()) {
+    while (ros::ok())
+    {
         ros::spinOnce();
 
         data_pretreat_flow_ptr->Run();
