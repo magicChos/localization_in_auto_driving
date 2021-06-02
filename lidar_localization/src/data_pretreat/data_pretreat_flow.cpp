@@ -30,6 +30,7 @@ namespace lidar_localization
         if (!ReadData())
             return false;
 
+        // 获取Lidar和imu之间的外参
         if (!InitCalibration())
             return false;
 
