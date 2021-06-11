@@ -18,10 +18,12 @@
 
 #include "lidar_localization/mapping/back_end/back_end.hpp"
 
-namespace lidar_localization {
-class BackEndFlow {
+namespace lidar_localization
+{
+  class BackEndFlow
+  {
   public:
-    BackEndFlow(ros::NodeHandle& nh, std::string cloud_topic, std::string odom_topic);
+    BackEndFlow(ros::NodeHandle &nh, std::string cloud_topic, std::string odom_topic);
 
     bool Run();
 
@@ -55,7 +57,7 @@ class BackEndFlow {
     PoseData current_gnss_pose_data_;
     PoseData current_laser_odom_data_;
     CloudData current_cloud_data_;
-};
+  };
 }
 
 #endif
