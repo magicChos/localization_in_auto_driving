@@ -21,23 +21,23 @@
 
 namespace lidar_localization
 {
-  class CloudSubscriber
-  {
-  public:
-    CloudSubscriber(ros::NodeHandle &nh, std::string topic_name, size_t buff_size);
-    CloudSubscriber() = default;
-    void ParseData(std::deque<CloudData> &deque_cloud_data);
+    class CloudSubscriber
+    {
+    public:
+        CloudSubscriber(ros::NodeHandle &nh, std::string topic_name, size_t buff_size);
+        CloudSubscriber() = default;
+        void ParseData(std::deque<CloudData> &deque_cloud_data);
 
-  private:
-    void msg_callback(const sensor_msgs::PointCloud2::ConstPtr &cloud_msg_ptr);
+    private:
+        void msg_callback(const sensor_msgs::PointCloud2::ConstPtr &cloud_msg_ptr);
 
-  private:
-    ros::NodeHandle nh_;
-    ros::Subscriber subscriber_;
-    std::deque<CloudData> new_cloud_data_;
+    private:
+        ros::NodeHandle nh_;
+        ros::Subscriber subscriber_;
+        std::deque<CloudData> new_cloud_data_;
 
-    std::mutex buff_mutex_;
-  };
+        std::mutex buff_mutex_;
+    };
 }
 
 #endif
