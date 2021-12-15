@@ -24,9 +24,6 @@ int main(int argc, char *argv[])
     nh.param<std::string>("cloud_topic", cloud_topic, "/synced_cloud");
     nh.param<std::string>("odom_topic", odom_topic, "/laser_odom");
 
-    std::cout << "@test cloud_topic: " << cloud_topic << std::endl;
-    std::cout << "@test odom_topic: " << odom_topic << std::endl;
-
     std::shared_ptr<FrontEndFlow> front_end_flow_ptr = std::make_shared<FrontEndFlow>(nh, cloud_topic, odom_topic);
 
     ros::Rate rate(100);

@@ -31,7 +31,6 @@ namespace lidar_localization
         std::string config_file_path = WORK_SPACE_PATH + "/config/mapping/front_end.yaml";
         YAML::Node config_node = YAML::LoadFile(config_file_path);
 
-        std::cout << "-----------------前端初始化-------------------" << std::endl;
         InitParam(config_node);
         InitRegistration(registration_ptr_, config_node);
         InitFilter("local_map", local_map_filter_ptr_, config_node);
@@ -99,6 +98,7 @@ namespace lidar_localization
 
         static Eigen::Matrix4f step_pose = Eigen::Matrix4f::Identity();
         static Eigen::Matrix4f last_pose = init_pose_;
+        // 预测下一帧的位姿
         static Eigen::Matrix4f predict_pose = init_pose_;
         static Eigen::Matrix4f last_key_frame_pose = init_pose_;
 

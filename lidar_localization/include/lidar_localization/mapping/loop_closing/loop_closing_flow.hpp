@@ -39,10 +39,13 @@ namespace lidar_localization
         // loop closing
         std::shared_ptr<LoopClosing> loop_closing_ptr_;
 
+        // 缓存关键帧数据
         std::deque<KeyFrame> key_frame_buff_;
+        // 缓存gnss数据
         std::deque<KeyFrame> key_gnss_buff_;
-
+        // 记录当前关键帧
         KeyFrame current_key_frame_;
+        // 记录当前gnss信息
         KeyFrame current_key_gnss_;
     };
 }

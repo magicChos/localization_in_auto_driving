@@ -25,7 +25,7 @@ namespace lidar_localization
          * @param input_source 输入源点云
          * @param predict_pose 初始位姿
          * @param result_cloud_ptr 输出对齐后的点云
-         * @param result_pose  变换矩阵
+         * @param result_pose  源点云到起始帧的坐标变换
          * @return true 
          * @return false 
          */

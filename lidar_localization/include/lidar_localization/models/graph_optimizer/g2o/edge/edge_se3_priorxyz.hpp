@@ -11,6 +11,9 @@
 
 namespace g2o
 {
+	// 3:观测值维度
+	// Eigen::Vector3d:观测值类型
+	// g2o::VertexSE3:连接定点类型
 	class EdgeSE3PriorXYZ : public g2o::BaseUnaryEdge<3, Eigen::Vector3d, g2o::VertexSE3>
 	{
 	public:
