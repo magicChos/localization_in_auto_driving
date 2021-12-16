@@ -26,6 +26,7 @@ namespace lidar_localization
 
         Eigen::AngleAxisf t_V(start_orientation, Eigen::Vector3f::UnitZ());
         Eigen::Matrix3f rotate_matrix = t_V.matrix();
+        
         Eigen::Matrix4f transform_matrix = Eigen::Matrix4f::Identity();
         transform_matrix.block<3, 3>(0, 0) = rotate_matrix.inverse();
         pcl::transformPointCloud(*origin_cloud_ptr, *origin_cloud_ptr, transform_matrix);

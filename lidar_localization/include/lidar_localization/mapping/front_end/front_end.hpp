@@ -32,7 +32,7 @@ namespace lidar_localization
          * @brief 
          * 
          * @param cloud_data[in] 输入的当前点云数据
-         * @param cloud_pose[out] 输出位姿信息
+         * @param cloud_pose[out] 输出当前帧在起始帧坐标系下的位姿
          * @return true 
          * @return false 
          */

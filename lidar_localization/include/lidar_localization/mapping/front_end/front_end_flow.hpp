@@ -34,9 +34,9 @@ namespace lidar_localization
         std::shared_ptr<FrontEnd> front_end_ptr_;
 
         std::deque<CloudData> cloud_data_buff_;
-
+        // 获取当前点云数据
         CloudData current_cloud_data_;
-        // 记录当前点云的位姿信息
+        // 记录当前点云的位姿信息（在起始帧坐标系下）
         Eigen::Matrix4f laser_odometry_ = Eigen::Matrix4f::Identity();
     };
 }

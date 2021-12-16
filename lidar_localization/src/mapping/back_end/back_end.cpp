@@ -24,7 +24,6 @@ namespace lidar_localization
         std::string config_file_path = WORK_SPACE_PATH + "/config/mapping/back_end.yaml";
         YAML::Node config_node = YAML::LoadFile(config_file_path);
 
-        std::cout << "-----------------后端初始化-------------------" << std::endl;
         InitParam(config_node);
         InitGraphOptimizer(config_node);
         InitDataPath(config_node);
@@ -192,6 +191,7 @@ namespace lidar_localization
             std::string file_path = key_frames_path_ + "/key_frame_" + std::to_string(key_frames_deque_.size()) + ".pcd";
             pcl::io::savePCDFileBinary(file_path, *cloud_data.cloud_ptr);
 
+            // 关键帧中记录的位姿为世界坐标系下
             KeyFrame key_frame;
             key_frame.time = laser_odom.time;
             key_frame.index = (unsigned int)key_frames_deque_.size();

@@ -167,6 +167,7 @@ namespace lidar_localization
 
     bool DataPretreatFlow::TransformData()
     {
+        // gnss位姿信息
         gnss_pose_ = Eigen::Matrix4f::Identity();
 
         current_gnss_data_.UpdateXYZ();
@@ -174,6 +175,7 @@ namespace lidar_localization
         gnss_pose_(1, 3) = current_gnss_data_.local_N;
         gnss_pose_(2, 3) = current_gnss_data_.local_U;
         gnss_pose_.block<3, 3>(0, 0) = current_imu_data_.GetOrientationMatrix();
+        // gnss_pose_转到lidar坐标系下
         gnss_pose_ *= lidar_to_imu_;
 
         current_velocity_data_.TransformCoordinate(lidar_to_imu_);

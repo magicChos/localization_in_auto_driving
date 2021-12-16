@@ -134,6 +134,7 @@ namespace lidar_localization
         if (!odometry_inited)
         {
             odometry_inited = true;
+            // T_l0^w = T_li^w * T_l0^li 激光的起始帧在世界坐标系下的位姿
             odom_init_pose = current_gnss_pose_data_.pose * current_laser_odom_data_.pose.inverse();
         }
         current_laser_odom_data_.pose = odom_init_pose * current_laser_odom_data_.pose;

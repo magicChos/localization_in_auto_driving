@@ -21,49 +21,51 @@
 
 namespace lidar_localization
 {
-  class DataPretreatFlow
-  {
-  public:
-    DataPretreatFlow(ros::NodeHandle &nh, std::string cloud_topic);
+    class DataPretreatFlow
+    {
+    public:
+        DataPretreatFlow(ros::NodeHandle &nh, std::string cloud_topic);
 
-    bool Run();
+        bool Run();
 
-  private:
-    bool ReadData();
-    bool InitCalibration();
-    bool InitGNSS();
-    bool HasData();
-    bool ValidData();
-    bool TransformData();
-    bool PublishData();
+    private:
+        bool ReadData();
+        bool InitCalibration();
+        bool InitGNSS();
+        bool HasData();
+        bool ValidData();
+        bool TransformData();
+        bool PublishData();
 
-  private:
-    // subscriber
-    std::shared_ptr<CloudSubscriber> cloud_sub_ptr_;
-    std::shared_ptr<IMUSubscriber> imu_sub_ptr_;
-    std::shared_ptr<VelocitySubscriber> velocity_sub_ptr_;
-    std::shared_ptr<GNSSSubscriber> gnss_sub_ptr_;
-    std::shared_ptr<TFListener> lidar_to_imu_ptr_;
-    // publisher
-    std::shared_ptr<CloudPublisher> cloud_pub_ptr_;
-    std::shared_ptr<OdometryPublisher> gnss_pub_ptr_;
-    // models
-    std::shared_ptr<DistortionAdjust> distortion_adjust_ptr_;
+    private:
+        // subscriber
+        std::shared_ptr<CloudSubscriber> cloud_sub_ptr_;
+        std::shared_ptr<IMUSubscriber> imu_sub_ptr_;
+        std::shared_ptr<VelocitySubscriber> velocity_sub_ptr_;
+        std::shared_ptr<GNSSSubscriber> gnss_sub_ptr_;
+        // 监听lidar和imu之间外参的tf指针
+        std::shared_ptr<TFListener> lidar_to_imu_ptr_;
+        // publisher
+        std::shared_ptr<CloudPublisher> cloud_pub_ptr_;
+        std::shared_ptr<OdometryPublisher> gnss_pub_ptr_;
+        // models
+        std::shared_ptr<DistortionAdjust> distortion_adjust_ptr_;
+        // lidar到imu的变换矩阵
+        Eigen::Matrix4f lidar_to_imu_ = Eigen::Matrix4f::Identity();
 
-    Eigen::Matrix4f lidar_to_imu_ = Eigen::Matrix4f::Identity();
+        std::deque<CloudData> cloud_data_buff_;
+        std::deque<IMUData> imu_data_buff_;
+        std::deque<VelocityData> velocity_data_buff_;
+        std::deque<GNSSData> gnss_data_buff_;
 
-    std::deque<CloudData> cloud_data_buff_;
-    std::deque<IMUData> imu_data_buff_;
-    std::deque<VelocityData> velocity_data_buff_;
-    std::deque<GNSSData> gnss_data_buff_;
+        CloudData current_cloud_data_;
+        IMUData current_imu_data_;
+        VelocityData current_velocity_data_;
+        GNSSData current_gnss_data_;
 
-    CloudData current_cloud_data_;
-    IMUData current_imu_data_;
-    VelocityData current_velocity_data_;
-    GNSSData current_gnss_data_;
-
-    Eigen::Matrix4f gnss_pose_ = Eigen::Matrix4f::Identity();
-  };
+        // 根据gnss推算出lidar在世界坐标系下的位姿
+        Eigen::Matrix4f gnss_pose_ = Eigen::Matrix4f::Identity();
+    };
 }
 
 #endif

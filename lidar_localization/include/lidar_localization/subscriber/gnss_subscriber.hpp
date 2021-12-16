@@ -1,5 +1,5 @@
 /*
- * @Description: 
+ * @Description:
  * @Author: Ren Qian
  * @Date: 2019-03-31 12:58:10
  */
@@ -15,22 +15,24 @@
 
 #include "lidar_localization/sensor_data/gnss_data.hpp"
 
-namespace lidar_localization {
-class GNSSSubscriber {
-  public:
-    GNSSSubscriber(ros::NodeHandle& nh, std::string topic_name, size_t buff_size);
-    GNSSSubscriber() = default;
-    void ParseData(std::deque<GNSSData>& deque_gnss_data);
+namespace lidar_localization
+{
+    class GNSSSubscriber
+    {
+    public:
+        GNSSSubscriber(ros::NodeHandle &nh, std::string topic_name, size_t buff_size);
+        GNSSSubscriber() = default;
+        void ParseData(std::deque<GNSSData> &deque_gnss_data);
 
-  private:
-    void msg_callback(const sensor_msgs::NavSatFixConstPtr& nav_sat_fix_ptr);
+    private:
+        void msg_callback(const sensor_msgs::NavSatFixConstPtr &nav_sat_fix_ptr);
 
-  private:
-    ros::NodeHandle nh_;
-    ros::Subscriber subscriber_;
-    std::deque<GNSSData> new_gnss_data_;
+    private:
+        ros::NodeHandle nh_;
+        ros::Subscriber subscriber_;
+        std::deque<GNSSData> new_gnss_data_;
 
-    std::mutex buff_mutex_;
-};
+        std::mutex buff_mutex_;
+    };
 }
 #endif
