@@ -71,7 +71,27 @@ namespace lidar_localization
          * @return false 
          */
         bool JointMap(int key_frame_index, CloudData::CLOUD_PTR &map_cloud_ptr, Eigen::Matrix4f &map_pose);
+        
+        /**
+         * @brief 加载最新关键帧点云数据
+         * 
+         * @param scan_cloud_ptr[out] 保存最新帧的点云
+         * @param scan_pose[out]      最新帧的gnss信息
+         * @return true 
+         * @return false 
+         */
         bool JointScan(CloudData::CLOUD_PTR &scan_cloud_ptr, Eigen::Matrix4f &scan_pose);
+
+        /**
+         * @brief 
+         * 
+         * @param map_cloud_ptr[in]  局部地图
+         * @param scan_cloud_ptr[in] 当前扫描地图
+         * @param scan_pose[in]      当前gnss位姿
+         * @param result_pose[out]   输出相对位姿
+         * @return true 
+         * @return false 
+         */
         bool Registration(CloudData::CLOUD_PTR &map_cloud_ptr,
                           CloudData::CLOUD_PTR &scan_cloud_ptr,
                           Eigen::Matrix4f &scan_pose,

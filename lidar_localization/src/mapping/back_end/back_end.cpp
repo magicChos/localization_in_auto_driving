@@ -51,8 +51,6 @@ namespace lidar_localization
             LOG(ERROR) << "没有找到与 " << graph_optimizer_type << " 对应的图优化模式,请检查配置文件";
             return false;
         }
-        std::cout << "后端优化选择的优化器为：" << graph_optimizer_type << std::endl
-                  << std::endl;
 
         graph_optimizer_config_.use_gnss = config_node["use_gnss"].as<bool>();
         graph_optimizer_config_.use_loop_close = config_node["use_loop_close"].as<bool>();
@@ -169,6 +167,7 @@ namespace lidar_localization
 
     bool BackEnd::MaybeNewKeyFrame(const CloudData &cloud_data, const PoseData &laser_odom, const PoseData &gnss_odom)
     {
+        // 上一帧点云在世界坐标系下的坐标
         static Eigen::Matrix4f last_key_pose = laser_odom.pose;
         if (key_frames_deque_.size() == 0)
         {

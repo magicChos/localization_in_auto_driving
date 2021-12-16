@@ -175,17 +175,18 @@ namespace lidar_localization
 
     bool LoopClosing::CloudRegistration(int key_frame_index)
     {
-        // 生成地图
+        // 生成的局部地图
         CloudData::CLOUD_PTR map_cloud_ptr(new CloudData::CLOUD());
         Eigen::Matrix4f map_pose = Eigen::Matrix4f::Identity();
         JointMap(key_frame_index, map_cloud_ptr, map_pose);
 
-        // 生成当前scan
+        // 记录当前点云数据
         CloudData::CLOUD_PTR scan_cloud_ptr(new CloudData::CLOUD());
+        // 最新帧的gnss信息
         Eigen::Matrix4f scan_pose = Eigen::Matrix4f::Identity();
         JointScan(scan_cloud_ptr, scan_pose);
 
-        // 匹配
+        // 保存当前扫描和局部地图的相对位姿
         Eigen::Matrix4f result_pose = Eigen::Matrix4f::Identity();
         Registration(map_cloud_ptr, scan_cloud_ptr, scan_pose, result_pose);
 
@@ -230,6 +231,15 @@ namespace lidar_localization
             pcl::io::loadPCDFile(file_path, *cloud_ptr);
 
             Eigen::Matrix4f cloud_pose = pose_to_gnss * all_key_frames_.at(i).pose;
+
+            std::cout << "@test--------------------------------------------------" << std::endl;
+            std::cout << "@test cloud_pose = " << std::endl;
+            std::cout << cloud_pose << std::endl;
+
+            std::cout << "----------------------------------------------------" << std::endl;
+            std::cout << "all_key_frames_.at(i).pose = " << std::endl;
+            std::cout << all_key_frames_.at(i).pose << std::endl;
+            std::cout << "----------------------------------------------------" << std::endl;
             pcl::transformPointCloud(*cloud_ptr, *cloud_ptr, cloud_pose);
 
             *map_cloud_ptr += *cloud_ptr;
@@ -240,7 +250,9 @@ namespace lidar_localization
 
     bool LoopClosing::JointScan(CloudData::CLOUD_PTR &scan_cloud_ptr, Eigen::Matrix4f &scan_pose)
     {
+        // 最新的gnss位姿信息
         scan_pose = all_key_gnss_.back().pose;
+        // 最新关键帧索引
         current_loop_pose_.index1 = all_key_frames_.back().index;
         current_loop_pose_.time = all_key_frames_.back().time;
 
