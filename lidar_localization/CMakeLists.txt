@@ -75,7 +75,7 @@ add_dependencies(loop_closing_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(loop_closing_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES})
 
 add_executable(viewer_node src/apps/viewer_node.cpp ${ALL_SRCS})
-add_dependencies(viewer_node ${catkin_EXPORTED_TARGETS} saveMap_gencpp)
+add_dependencies(viewer_node ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencpp)
 target_link_libraries(viewer_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES})
 
 add_executable(matching_node src/apps/matching_node.cpp ${ALL_SRCS})

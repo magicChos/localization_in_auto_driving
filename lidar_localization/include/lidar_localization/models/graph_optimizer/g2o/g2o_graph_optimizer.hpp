@@ -50,13 +50,14 @@ G2O_USE_OPTIMIZATION_LIBRARY(csparse)
 // } // namespace g2o
 
 namespace lidar_localization {
-class G2oGraphOptimizer: public InterfaceGraphOptimizer {
-  public:
+class G2oGraphOptimizer : public InterfaceGraphOptimizer
+{
+public:
     G2oGraphOptimizer(const std::string &solver_type = "lm_var");
     // 优化
     bool Optimize() override;
     // 输出数据
-    bool GetOptimizedPose(std::deque<Eigen::Matrix4f>& optimized_pose) override;
+    bool GetOptimizedPose(std::deque<Eigen::Matrix4f> &optimized_pose) override;
     int GetNodeNum() override;
     // 添加节点、边、鲁棒核
     void SetEdgeRobustKernel(std::string robust_kernel_name, double robust_kernel_size) override;
@@ -72,13 +73,13 @@ class G2oGraphOptimizer: public InterfaceGraphOptimizer {
                                    const Eigen::Quaterniond &quat,
                                    Eigen::VectorXd noise) override;
 
-  private:
+private:
     Eigen::MatrixXd CalculateSe3EdgeInformationMatrix(Eigen::VectorXd noise);
     Eigen::MatrixXd CalculateSe3PriorQuaternionEdgeInformationMatrix(Eigen::VectorXd noise);
     Eigen::MatrixXd CalculateDiagMatrix(Eigen::VectorXd noise);
     void AddRobustKernel(g2o::OptimizableGraph::Edge *edge, const std::string &kernel_type, double kernel_size);
 
-  private:
+private:
     g2o::RobustKernelFactory *robust_kernel_factory_;
     std::unique_ptr<g2o::SparseOptimizer> graph_ptr_;
 
