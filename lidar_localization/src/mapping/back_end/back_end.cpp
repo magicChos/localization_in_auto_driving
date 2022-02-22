@@ -165,7 +165,7 @@ bool BackEnd::SavePose(std::ofstream &ofs, const Eigen::Matrix4f &pose)
 
 bool BackEnd::MaybeNewKeyFrame(const CloudData &cloud_data, const PoseData &laser_odom, const PoseData &gnss_odom)
 {
-    // 上一帧点云在世界坐标系下的坐标
+    // 上一帧点云在世界坐标系下的位姿
     static Eigen::Matrix4f last_key_pose = laser_odom.pose;
     if (key_frames_deque_.size() == 0)
     {

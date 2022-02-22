@@ -8,19 +8,18 @@
 
 #include <Eigen/Dense>
 
-namespace lidar_localization
+namespace lidar_localization {
+class LoopPose
 {
-    class LoopPose
-    {
-    public:
-        double time = 0.0;
-        unsigned int index0 = 0;
-        unsigned int index1 = 0;
-        Eigen::Matrix4f pose = Eigen::Matrix4f::Identity();
+public:
+    double time = 0.0;
+    unsigned int index0 = 0;
+    unsigned int index1 = 0;
+    Eigen::Matrix4f pose = Eigen::Matrix4f::Identity();
 
-    public:
-        Eigen::Quaternionf GetQuaternion();
-    };
-}
+public:
+    Eigen::Quaternionf GetQuaternion();
+};
+} // namespace lidar_localization
 
 #endif

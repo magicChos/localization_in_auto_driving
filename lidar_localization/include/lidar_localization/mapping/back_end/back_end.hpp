@@ -68,14 +68,14 @@ private:
     bool AddNodeAndEdge(const PoseData &gnss_data);
 
     /**
-         * @brief 
-         * 
-         * @param cloud_data[in]   当前点云数据 
-         * @param laser_odom[in]   当前点云数据在世界坐标系下的位姿 
-         * @param gnss_pose[in]    当前gnss测量得到的lidar位姿信息 
-         * @return true 
-         * @return false 
-         */
+     * @brief 判断是否生成新的关键帧
+     * 
+     * @param cloud_data[in]   当前点云数据 
+     * @param laser_odom[in]   当前点云数据在世界坐标系下的位姿 
+     * @param gnss_pose[in]    当前gnss测量得到的lidar位姿信息 
+     * @return true 
+     * @return false 
+     */
     bool MaybeNewKeyFrame(const CloudData &cloud_data, const PoseData &laser_odom, const PoseData &gnss_pose);
     bool MaybeOptimized();
     bool SaveOptimizedPose();

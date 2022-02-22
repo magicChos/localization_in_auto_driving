@@ -80,6 +80,7 @@ void G2oGraphOptimizer::AddSe3Node(const Eigen::Isometry3d &pose, bool need_fix)
 {
     // 相机位姿节点
     g2o::VertexSE3 *vertex(new g2o::VertexSE3());
+    std::cout << "@test graph_ptr_->vertices().size() = " << graph_ptr_->vertices().size() << std::endl;
     vertex->setId(graph_ptr_->vertices().size());
     vertex->setEstimate(pose);
     if (need_fix)
